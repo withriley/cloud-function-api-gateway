@@ -3,6 +3,7 @@ A Template for creating your own Terraform Modules :robot:
 
 ## Assumptions and caveats :warning:
 
+- You MUST specify either the `ip_restrictions` or `hostname_restrictions` variable. If you do not specify either of these variables, no API keys will be created and the API will not be accesible (assuming of course you've configured your OpenAPI spec to require keys!)
 - Cloud Functions must be configured with public ingress. Do not allow unauthenticated invocations - this module will configure IAM permissions for the API Gateway to invoke the Cloud Functions. 
 - All resources must be in the same project
 - The Cloud Functions defined in the OpenAPI spec must also be specified in the `cloud_functions` variable so that we can configure IAM permissions for the API Gateway. 
