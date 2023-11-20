@@ -1,0 +1,9 @@
+# .terraform-docs.yml
+content: |-
+  {{ .Header }}
+
+  {{ .Modules }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}  

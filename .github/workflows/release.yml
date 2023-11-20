@@ -1,0 +1,26 @@
+name: Create Monthly Release
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' # Trigger on the 1st of every month at midnight
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config user.name "Emile Hofsink"
+          git config user.email "emile.hofsink@withriley.com"
+
+      - name: Create release
+        run: |
+          version=$(date +"%y.%m")
+          tag="v$(date +"%y.%m")"
+          body="New release for v${version}"
+          git tag v${version}
+          git push origin v${version}
+          curl --data '{"tag_name": "'"v${version}"'", "name": "'"v${version}"'", "body": "'"New release for ${tag}"'"}' -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -X POST https://api.github.com/repos/withriley/template-terraform-module/releases
