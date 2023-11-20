@@ -37,7 +37,7 @@ resource "google_service_account" "default" {
   display_name = "Service Account created by TF API GW module"
 }
 
-// get cloud run jobs
+// get cloud functions
 data "google_cloudfunctions2_function" "default" {
   count    = length(var.cloud_functions)
   project  = var.project_id
@@ -45,7 +45,7 @@ data "google_cloudfunctions2_function" "default" {
   location = var.cloud_functions[count.index].location
 }
 
-// add "roles/run.invoker" to each cloud run job
+// add "roles/run.invoker" to each cloud function
 resource "google_cloud_run_service_iam_member" "default" {
   count    = length(data.google_cloudfunctions2_function.default)
   location = data.google_cloudfunctions2_function.default[count.index].location
