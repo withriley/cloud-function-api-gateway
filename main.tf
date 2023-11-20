@@ -11,7 +11,7 @@ locals {
   apis      = ["apikeys.googleapis.com", "apigateway.googleapis.com"]
 }
 
-// enable API Gateway API
+// enable required APIs for this module
 resource "google_project_service" "apigw" {
   for_each = toset(local.apis)
   project  = var.project_id
