@@ -39,10 +39,10 @@ resource "google_service_account" "default" {
 
 // get cloud run jobs
 data "google_cloudfunctions2_function" "default" {
-  count    = length(var.cloud_run_functions)
+  count    = length(var.cloud_functions)
   project  = var.project_id
-  name     = var.cloud_run_functions[count.index].name
-  location = var.cloud_run_functions[count.index].location
+  name     = var.cloud_functions[count.index].name
+  location = var.cloud_functions[count.index].location
 }
 
 // add "roles/run.invoker" to each cloud run job

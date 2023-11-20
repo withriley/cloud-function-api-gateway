@@ -1,9 +1,9 @@
-variable "cloud_run_functions" {
+variable "cloud_functions" {
   type = list(object({
     name     = string
     location = string
   }))
-  description = "Key value pairs for the cloud run jobs that will be invoked by the API Gateway. This variable is used to configure IAM permissions for the Service Account."
+  description = "Key value pairs for the Cloud Functions that will be invoked by the API Gateway. This variable is used to configure IAM permissions for the Service Account."
 }
 
 variable "project_id" {
