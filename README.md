@@ -71,6 +71,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cloud_functions"></a> [cloud\_functions](#input\_cloud\_functions) | Key value pairs for the Cloud Functions that will be invoked by the API Gateway. This variable is used to configure IAM permissions for the Service Account. | <pre>list(object({<br>    name     = string<br>    location = string<br>  }))</pre> | n/a | yes |
+| <a name="input_gateway_id"></a> [gateway\_id](#input\_gateway\_id) | The ID of the API Gateway that will be created | `string` | n/a | yes |
 | <a name="input_hostname_restrictions"></a> [hostname\_restrictions](#input\_hostname\_restrictions) | A list of the hostnames/websites that are allowed to access the API. | `list(string)` | `[]` | no |
 | <a name="input_ip_restrictions"></a> [ip\_restrictions](#input\_ip\_restrictions) | A list of the IP addresses that are allowed to access the API. Can be a single IP address or a range specified in CIDR format. | `list(string)` | `[]` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project ID where resources are deployed to | `string` | n/a | yes |
