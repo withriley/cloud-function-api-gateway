@@ -45,7 +45,7 @@ module "api_gateway" {
   source = "../cloud-function-api-gateway"
   project_id = "sandbox"
   api_key_restrictions = {
-    api1 = {
+    key1 = {
         ip_restrictions = ""
         hostname_restrictions = "www.google.com"
     }
