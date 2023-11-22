@@ -14,7 +14,7 @@ variable "api_key_restrictions" {
     ip_restrictions = list(string)
     hostname_restrictions = list(string)
   }))
-  description = "A map of objects containing either an IP address or hostname that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified."
+  description = "A map of objects containing either lists of IP addresses and/or hostnames that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified."
   validation {
     condition     = length([for value in var.api_key_restrictions : value if value.ip_restrictions != null && length(value.ip_restrictions) > 0 || value.hostname_restrictions != null && length(value.hostname_restrictions) > 0]) > 0
     error_message = "At least one of ip_restrictions or hostname_restrictions must be specified."
