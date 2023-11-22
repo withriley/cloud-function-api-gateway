@@ -23,3 +23,7 @@ variable "hostname_restrictions" {
   default = []
   description = "A list of the hostnames/websites that are allowed to access the API."
 }
+variable "gateway_id" {
+  type = string
+  description = "The ID of the API Gateway that will be created"
+}
