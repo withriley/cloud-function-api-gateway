@@ -66,7 +66,7 @@ resource "google_project_iam_member" "default" {
 resource "google_api_gateway_api" "api_gw" {
   provider     = google-beta
   project      = var.project_id
-  api_id       = "api-gw-${random_id.default.hex}"
+  api_id       = "${var.gateway_id}-${random_id.default.hex}"
   display_name = "API GW config created by TF module"
 }
 
@@ -74,7 +74,7 @@ resource "google_api_gateway_api_config" "api_gw" {
   provider      = google-beta
   project       = var.project_id
   api           = google_api_gateway_api.api_gw.api_id
-  api_config_id = "config-${local.configmd5}"
+  api_config_id = "${var.gateway_id}-config-${local.configmd5}"
   display_name  = "API GW config created by TF module"
 
   openapi_documents {
@@ -97,7 +97,7 @@ resource "google_api_gateway_gateway" "api_gw" {
   provider     = google-beta
   project      = var.project_id
   api_config   = google_api_gateway_api_config.api_gw.id
-  gateway_id   = "api-gw-${random_id.default.hex}"
+  gateway_id   = "${var.gateway_id}-${random_id.default.hex}"
   display_name = "API GW created by TF module"
 }
 
@@ -112,7 +112,7 @@ resource "time_sleep" "wait_5_minutes" {
 
 // enable API for usage via API keys 
 resource "google_project_service" "api" {
-  project  = "samb-sandbox"
+  project  = var.project_id
   service  = google_api_gateway_api.api_gw.managed_service
   provider = google-beta
   timeouts {
