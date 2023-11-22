@@ -1,6 +1,12 @@
 # Cloud Function API Gateway Terraform Module 🛠️
 
-A better description of this module would ideally be placed here...
+This Terraform module configures an API Gateway that is backed by one or more Cloud Functions.
+
+It includes:
+
+- Creation of API keys with restrictions (either IP or hostname based)
+- Creation of the API Gateway and relevant configurations
+- Creation of a Service Account that is used by the API Gateway to invoke the Cloud Functions (and required permissions)
 
 ## Assumptions and caveats :warning:
 
