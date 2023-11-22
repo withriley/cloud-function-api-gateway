@@ -76,7 +76,7 @@ resource "google_api_gateway_api_config" "api_gw" {
   openapi_documents {
     document {
       path     = "spec.yaml"
-      contents = filebase64("open-api.yaml")
+      contents = filebase64("${path.cwd}/${var.api_spec_file}")
     }
   }
   gateway_config {
@@ -124,7 +124,7 @@ resource "google_project_service" "api" {
 
 // create API keys with source ip based restrictions
 resource "google_apikeys_key" "ip" {
-  for_each     = toset(var.ip_restrictions)
+  for_each     = var.api_key_restrictions
   name         = replace("apigw-key-ip-${each.key}", ".", "")
   display_name = "api gateway key for: ${each.key} - created by TF"
   project      = var.project_id
@@ -134,25 +134,10 @@ resource "google_apikeys_key" "ip" {
       service = google_api_gateway_api.api_gw.managed_service
     }
     server_key_restrictions {
-      allowed_ips = [each.key]
-    }
-  }
-  depends_on = [google_project_service.api]
-}
-
-// create API keys with source hostname based restrctions
-resource "google_apikeys_key" "hostname" {
-  for_each     = toset(var.hostname_restrictions)
-  name         = replace("apigw-key-host-${each.key}", ".", "")
-  display_name = "api gateway key for: ${each.key} - created by TF"
-  project      = var.project_id
-
-  restrictions {
-    api_targets {
-      service = google_api_gateway_api.api_gw.managed_service
+      allowed_ips = [each.value.ip_restrictions]
     }
     browser_key_restrictions {
-      allowed_referrers = [each.key]
+      allowed_referrers = [each.value.hostname_restrictions]
     }
   }
   depends_on = [google_project_service.api]
