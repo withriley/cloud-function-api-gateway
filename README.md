@@ -1,5 +1,6 @@
 # Cloud Function API Gateway Terraform Module 🛠️
-A Template for creating your own Terraform Modules :robot:
+
+A better description of this module would ideally be placed here...
 
 ## Assumptions and caveats :warning:
 
