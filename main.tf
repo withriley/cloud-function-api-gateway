@@ -1,9 +1,5 @@
-// TO DO: - Docs to note the required Cloud Function configs (public ingress - auth required)
-//        - all resources must be in the same project
-//        - functions in OpenAPI spec must also be in TF vars
-//        - security config must match what's in example yaml file for API auth to work 
-
 // TO DO: Create an example
+// TO DO: Uplift the way that hostnames and IP addresses are specified to allow for more complex configurations
 
 // locals
 locals {
