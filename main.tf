@@ -63,7 +63,7 @@ resource "google_api_gateway_api" "api_gw" {
   provider     = google-beta
   project      = var.project_id
   api_id       = "${var.gateway_id}-${random_id.default.hex}"
-  display_name = "API GW config created by TF module"
+  display_name = var.gateway_name
 }
 
 resource "google_api_gateway_api_config" "api_gw" {
@@ -71,7 +71,7 @@ resource "google_api_gateway_api_config" "api_gw" {
   project       = var.project_id
   api           = google_api_gateway_api.api_gw.api_id
   api_config_id = "${var.gateway_id}-config-${local.configmd5}"
-  display_name  = "API GW config created by TF module"
+  display_name  = var.gateway_name
 
   openapi_documents {
     document {
@@ -92,16 +92,15 @@ resource "google_api_gateway_api_config" "api_gw" {
 resource "google_api_gateway_gateway" "api_gw" {
   provider     = google-beta
   project      = var.project_id
+  region       = var.region
   api_config   = google_api_gateway_api_config.api_gw.id
   gateway_id   = "${var.gateway_id}-${random_id.default.hex}"
-  display_name = "API GW created by TF module"
+  display_name = var.gateway_name
 }
 
 // sleep 5 minutes to wait for API to become available - requried to enable API via "google_project_service" resource
-resource "null_resource" "previous" {}
-
 resource "time_sleep" "wait_5_minutes" {
-  depends_on = [null_resource.previous]
+  depends_on = [google_api_gateway_gateway.api_gw]
 
   create_duration = "300s"
 }
