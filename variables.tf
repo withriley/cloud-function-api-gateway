@@ -11,8 +11,8 @@ variable "project_id" {
 }
 variable "api_key_restrictions" {
   type    = map(object({
-    ip_restrictions = string
-    hostname_restrictions = string
+    ip_restrictions = list(string)
+    hostname_restrictions = list(string)
   }))
   description = "A map of objects containing either an IP address or hostname that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified."
   validation {

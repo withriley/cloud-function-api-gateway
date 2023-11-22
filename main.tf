@@ -125,7 +125,7 @@ resource "google_project_service" "api" {
 // create API keys with source ip based restrictions
 resource "google_apikeys_key" "ip" {
   for_each     = var.api_key_restrictions
-  name         = replace("apigw-key-ip-${each.key}", ".", "")
+  name         = "apigw-key-ip-${each.key}"
   display_name = "api gateway key for: ${each.key} - created by TF"
   project      = var.project_id
 
@@ -134,10 +134,10 @@ resource "google_apikeys_key" "ip" {
       service = google_api_gateway_api.api_gw.managed_service
     }
     server_key_restrictions {
-      allowed_ips = [each.value.ip_restrictions]
+      allowed_ips = each.value.ip_restrictions
     }
     browser_key_restrictions {
-      allowed_referrers = [each.value.hostname_restrictions]
+      allowed_referrers = each.value.hostname_restrictions
     }
   }
   depends_on = [google_project_service.api]
