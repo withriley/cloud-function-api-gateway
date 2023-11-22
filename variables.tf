@@ -18,7 +18,7 @@ variable "api_key_restrictions" {
   validation {
     condition = alltrue([
       for value in var.api_key_restrictions : (
-        length(value.ip_restrictions) == 0 || length(value.hostname_restrictions) == 0 && length(value.ip_restrictions) > 0 || length(value.hostname_restrictions) > 0
+        (length(value.ip_restrictions) == 0 || length(value.hostname_restrictions) == 0) && (length(value.ip_restrictions) > 0 || length(value.hostname_restrictions) > 0)
       )
     ])
     error_message = "Exactly one of 'ip_restrictions' or 'hostname_restrictions' must be specified for each API key."
