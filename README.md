@@ -4,23 +4,33 @@ A better description of this module would ideally be placed here...
 
 ## Assumptions and caveats :warning:
 
-- You MUST specify either the `ip_restrictions` or `hostname_restrictions` variable. If you do not specify either of these variables, no API keys will be created and the API will not be accesible (assuming of course you've configured your OpenAPI spec to require keys!)
 - Cloud Functions must be configured with public ingress. Do not allow unauthenticated invocations - this module will configure IAM permissions for the API Gateway to invoke the Cloud Functions. 
 - All resources must be in the same project
 - The Cloud Functions defined in the OpenAPI spec must also be specified in the `cloud_functions` variable so that we can configure IAM permissions for the API Gateway. 
+- The `api_spec_file` variable must be a path to the OpenAPI spec YAML file in the same directory as the Terraform configuration file (see example below).
 
-## API Key Requirements :heavy_check_mark:
+## API Key Requirements + OpenAPI spec example :heavy_check_mark:
 
 The `security` and `securityDefinitions` section of the OpenAPI spec must be configured as follows for API authentication to work with GCP keys. 
 
 ````
+# openapi2-functions.yaml
+swagger: '2.0'
+info:
+  title: Super Fast API
+  description: Sample API on API Gateway with a Google Cloud Functions backend
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
 paths:
   /hello:
     post:
       summary: Greet a user
       operationId: hello
       x-google-backend:
-        address: https://australia-southeast2-gcpproject.cloudfunctions.net/hello-world
+        address: https://australia-southeast2-sandboxproject.cloudfunctions.net/hello-world
       security:
         - api_key: []
       responses:
