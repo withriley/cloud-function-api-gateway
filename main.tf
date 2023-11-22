@@ -3,7 +3,7 @@
 
 // locals
 locals {
-  configmd5 = md5(file("open-api.yaml")) # this generates an md5 hash so that the api config name is unique whenever the config changes
+  configmd5 = md5(file("${path.cwd}/${var.api_spec_file}")) # this generates an md5 hash so that the api config name is unique whenever the config changes
   apis      = ["apikeys.googleapis.com", "apigateway.googleapis.com"]
 }
 
