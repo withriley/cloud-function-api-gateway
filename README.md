@@ -11,9 +11,11 @@ It includes:
 ## Assumptions and caveats :warning:
 
 - Cloud Functions must be configured with public ingress. Do not allow unauthenticated invocations - this module will configure IAM permissions for the API Gateway to invoke the Cloud Functions. 
-- All resources must be in the same project
+- Only Gen 2 Cloud Functions are supported by this module. 
+- All resources must be in the same project. 
 - The Cloud Functions defined in the OpenAPI spec must also be specified in the `cloud_functions` variable so that we can configure IAM permissions for the API Gateway. 
 - The `api_spec_file` variable must be a path to the OpenAPI spec YAML file in the same directory as the Terraform configuration file (see example below).
+- When specifying the `api_key_restrictions` variable, at least one of `ip_restrictions` or `hostname_restrictions` must be specified (ie. not both). 
 
 ## API Key Requirements + OpenAPI spec example :heavy_check_mark:
 
