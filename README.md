@@ -88,7 +88,6 @@ module "api_gateway" {
 | [google_project_iam_member.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_service.apigw](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
 | [google_service_account.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
-| [null_resource.previous](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [random_id.default](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [time_sleep.wait_5_minutes](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [google_cloudfunctions2_function.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/cloudfunctions2_function) | data source |
@@ -101,11 +100,13 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_api_key_restrictions"></a> [api\_key\_restrictions](#input\_api\_key\_restrictions) | A map of objects containing either lists of IP addresses and/or hostnames that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified. | <pre>map(object({<br>    ip_restrictions = list(string)<br>    hostname_restrictions = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_api_key_restrictions"></a> [api\_key\_restrictions](#input\_api\_key\_restrictions) | A map of objects containing either lists of IP addresses and/or hostnames that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified. | <pre>map(object({<br>    ip_restrictions       = list(string)<br>    hostname_restrictions = list(string)<br>  }))</pre> | n/a | yes |
 | <a name="input_api_spec_file"></a> [api\_spec\_file](#input\_api\_spec\_file) | The path to the OpenAPI spec file that will be used to create the API Gateway | `string` | n/a | yes |
 | <a name="input_cloud_functions"></a> [cloud\_functions](#input\_cloud\_functions) | Key value pairs for the Cloud Functions that will be invoked by the API Gateway. This variable is used to configure IAM permissions for the Service Account. | <pre>list(object({<br>    name     = string<br>    location = string<br>  }))</pre> | n/a | yes |
 | <a name="input_gateway_id"></a> [gateway\_id](#input\_gateway\_id) | The ID of the API Gateway that will be created | `string` | n/a | yes |
+| <a name="input_gateway_name"></a> [gateway\_name](#input\_gateway\_name) | The name of the API Gateway that will be created | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project ID where resources are deployed to | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | The region to deploy the API Gateway to. | `string` | n/a | yes |
 
 ## Outputs
 
