@@ -14,9 +14,10 @@ It includes:
 - Only Gen 2 Cloud Functions are supported by this module. 
 - All resources must be in the same project. 
 - The Cloud Functions defined in the OpenAPI spec must also be specified in the `cloud_functions` variable so that we can configure IAM permissions for the API Gateway. 
-- The `api_spec_file` variable must be a path to the OpenAPI spec YAML file in the same directory as the Terraform configuration file (see example below).
+- The `api_spec_file` variable must be a path to the OpenAPI spec YAML file in the same directory as the Terraform configuration file (see example YAML below).
 - When specifying the `api_key_restrictions` variable, at least one of `ip_restrictions` or `hostname_restrictions` must be specified (ie. not both). 
-
+- When setting the `title` of the API in the OpenAPI spec, be sure to use a very unique name.  
+ 
 ## API Key Requirements + OpenAPI spec example :heavy_check_mark:
 
 The `security` and `securityDefinitions` section of the OpenAPI spec must be configured as follows for API authentication to work with GCP keys. 
