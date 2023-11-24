@@ -16,7 +16,7 @@ It includes:
 - The Cloud Functions defined in the OpenAPI spec must also be specified in the `cloud_functions` variable so that we can configure IAM permissions for the API Gateway. 
 - The `api_spec_file` variable must be a path to the OpenAPI spec YAML file in the same directory as the Terraform configuration file (see example YAML below).
 - When specifying the `api_key_restrictions` variable, at least one of `ip_restrictions` or `hostname_restrictions` must be specified (ie. not both). 
-- When setting the `title` of the API in the OpenAPI spec, be sure to use a very unique name.  
+- When setting the `title` of the API in the OpenAPI spec use a unique name. APIs are global resources and the name should be unique across all projects. It is possible to create multiple APIs with the same name which can cause issues and confusion.
  
 ## API Key Requirements + OpenAPI spec example :heavy_check_mark:
 
