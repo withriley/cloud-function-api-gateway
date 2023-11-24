@@ -122,7 +122,7 @@ resource "google_project_service" "api" {
 }
 
 // create API keys with source based restrictions
-resource "google_apikeys_key" "ip" {
+resource "google_apikeys_key" "default" {
   for_each     = var.api_key_restrictions
   name         = "apigw-key-ip-${each.key}"
   display_name = "api gateway key for: ${each.key} - created by TF"
