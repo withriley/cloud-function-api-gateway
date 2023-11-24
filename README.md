@@ -86,7 +86,7 @@ module "api_gateway" {
 | [google-beta_google_api_gateway_api_config.api_gw](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_api_gateway_api_config) | resource |
 | [google-beta_google_api_gateway_gateway.api_gw](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_api_gateway_gateway) | resource |
 | [google-beta_google_project_service.api](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_project_service) | resource |
-| [google_apikeys_key.ip](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/apikeys_key) | resource |
+| [google_apikeys_key.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/apikeys_key) | resource |
 | [google_cloud_run_service_iam_member.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service_iam_member) | resource |
 | [google_project_iam_member.default](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_service.apigw](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
@@ -103,7 +103,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_api_key_restrictions"></a> [api\_key\_restrictions](#input\_api\_key\_restrictions) | A map of objects containing either lists of IP addresses and/or hostnames that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified. | <pre>map(object({<br>    ip_restrictions       = list(string)<br>    hostname_restrictions = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_api_key_restrictions"></a> [api\_key\_restrictions](#input\_api\_key\_restrictions) | A map of objects containing either lists of IP addresses or hostnames that are allowed to access the API for each key. Create multiple objects for multiple keys. | <pre>map(object({<br>    ip_restrictions       = optional(list(string), [])<br>    hostname_restrictions = optional(list(string), [])<br>  }))</pre> | n/a | yes |
 | <a name="input_api_spec_file"></a> [api\_spec\_file](#input\_api\_spec\_file) | The path to the OpenAPI spec file that will be used to create the API Gateway | `string` | n/a | yes |
 | <a name="input_cloud_functions"></a> [cloud\_functions](#input\_cloud\_functions) | Key value pairs for the Cloud Functions that will be invoked by the API Gateway. This variable is used to configure IAM permissions for the Service Account. | <pre>list(object({<br>    name     = string<br>    location = string<br>  }))</pre> | n/a | yes |
 | <a name="input_gateway_id"></a> [gateway\_id](#input\_gateway\_id) | The ID of the API Gateway that will be created | `string` | n/a | yes |
@@ -113,5 +113,9 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_gateway_url"></a> [gateway\_url](#output\_gateway\_url) | The URL of the API Gateway |
+| <a name="output_iam_enabled_functions"></a> [iam\_enabled\_functions](#output\_iam\_enabled\_functions) | The cloud functions that have been configured with the IAM role 'roles/run.invoker' |
+| <a name="output_key_ids"></a> [key\_ids](#output\_key\_ids) | The IDs of the API keys that have been created |
 <!-- END_TF_DOCS -->
