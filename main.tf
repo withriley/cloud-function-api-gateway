@@ -121,7 +121,7 @@ resource "google_project_service" "api" {
   depends_on = [time_sleep.wait_5_minutes]
 }
 
-// create API keys with source ip based restrictions
+// create API keys with source based restrictions
 resource "google_apikeys_key" "ip" {
   for_each     = var.api_key_restrictions
   name         = "apigw-key-ip-${each.key}"
@@ -132,11 +132,17 @@ resource "google_apikeys_key" "ip" {
     api_targets {
       service = google_api_gateway_api.api_gw.managed_service
     }
-    server_key_restrictions {
-      allowed_ips = each.value.ip_restrictions
+    dynamic "server_key_restrictions" {
+      for_each = length(each.value.ip_restrictions) == 0 ? [] : [1] # if the length of the list is 0, then don't server key restrictions
+      content {
+        allowed_ips = each.value.ip_restrictions
+      }
     }
-    browser_key_restrictions {
-      allowed_referrers = each.value.hostname_restrictions
+    dynamic "browser_key_restrictions" {
+      for_each = length(each.value.hostname_restrictions) == 0 ? [] : [1] # if the length is the list 0, then don't add browser key restrictions
+      content {
+        allowed_referrers = each.value.hostname_restrictions
+      }
     }
   }
   depends_on = [google_project_service.api]
