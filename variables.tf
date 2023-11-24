@@ -14,14 +14,14 @@ variable "api_key_restrictions" {
     ip_restrictions       = optional(list(string), [])
     hostname_restrictions = optional(list(string), [])
   }))
-  description = "A map of objects containing either lists of IP addresses and/or hostnames that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified."
+  description = "A map of objects containing either lists of IP addresses or hostnames that are allowed to access the API for each key. Create multiple objects for multiple keys."
   validation {
     condition = alltrue([
       for value in var.api_key_restrictions : (
-        length(value.ip_restrictions) > 0 || length(value.hostname_restrictions) > 0
+        length(value.ip_restrictions) == 0 || length(value.hostname_restrictions) == 0 # At least one of these lists must be empty. IP and Host restrictions cannot be configured on the same key. 
       )
     ])
-    error_message = "Exactly one of 'ip_restrictions' or 'hostname_restrictions' must be specified for each API key."
+    error_message = "Exactly one of 'ip_restrictions' or 'hostname_restrictions' must be specified for each API key. IP and Host restrictions cannot be configured on the same key."
   }
 }
 variable "gateway_id" {
