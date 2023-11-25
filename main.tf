@@ -4,7 +4,7 @@
 // locals
 locals {
   configmd5 = md5(file("${path.cwd}/${var.api_spec_file}")) # this generates an md5 hash so that the api config name is unique whenever the config changes
-  apis      = ["apikeys.googleapis.com", "apigateway.googleapis.com"]
+  apis      = ["apikeys.googleapis.com", "apigateway.googleapis.com", "servicecontrol.googleapis.com"]
 }
 
 // enable required APIs for this module
