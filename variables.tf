@@ -11,17 +11,20 @@ variable "project_id" {
 }
 variable "api_key_restrictions" {
   type = map(object({
-    ip_restrictions       = list(string)
-    hostname_restrictions = list(string)
+    ip_restrictions       = optional(list(string), [])
+    hostname_restrictions = optional(list(string), [])
   }))
-  description = "A map of objects containing either lists of IP addresses and/or hostnames that are allowed to access the API for each key. IPs can be a single IP address or a range specified in CIDR format. Create multiple objects for multiple keys. At least one must be specified."
+  description = "A map of objects containing either lists of IP addresses or hostnames that are allowed to access the API for each key. Create multiple objects for multiple keys."
   validation {
     condition = alltrue([
-      for value in var.api_key_restrictions : (
-        (length(value.ip_restrictions) == 0 || length(value.hostname_restrictions) == 0) && (length(value.ip_restrictions) > 0 || length(value.hostname_restrictions) > 0)
+      for key, value in var.api_key_restrictions : (
+        (length(value.ip_restrictions) == 0 || length(value.hostname_restrictions) == 0) && (length(value.ip_restrictions) > 0 || length(value.hostname_restrictions) > 0) && can(regex("^[A-Za-z0-9]+$", key)) 
+        # At least one of these lists must be empty. IP and Host restrictions cannot be configured on the same key. 
+        # At least one of these lists must have at least one item (ie. at least one restriction specified)
+        # The key of the map must be alphanumeric
       )
-    ])
-    error_message = "Exactly one of 'ip_restrictions' or 'hostname_restrictions' must be specified for each API key."
+    ])  
+    error_message = "Exactly one of 'ip_restrictions' or 'hostname_restrictions' must be specified for each API key. IP and Host restrictions cannot be configured on the same key. Map keys must be alphanumeric (the key name)."
   }
 }
 variable "gateway_id" {
@@ -37,6 +40,6 @@ variable "api_spec_file" {
   description = "The path to the OpenAPI spec file that will be used to create the API Gateway"
 }
 variable "region" {
-  type = string
+  type        = string
   description = "The region to deploy the API Gateway to."
 }
