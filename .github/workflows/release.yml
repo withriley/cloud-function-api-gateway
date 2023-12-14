@@ -23,4 +23,4 @@ jobs:
           body="New release for v${version}"
           git tag v${version}
           git push origin v${version}
-          curl --data '{"tag_name": "'"v${version}"'", "name": "'"v${version}"'", "body": "'"New release for ${tag}"'"}' -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -X POST https://api.github.com/repos/withriley/template-terraform-module/releases
+          curl --data '{"tag_name": "'"v${version}"'", "name": "'"v${version}"'", "body": "'"New release for ${tag}"'"}' -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -X POST https://api.github.com/repos/withriley/cloud-function-api-gateway/releases
