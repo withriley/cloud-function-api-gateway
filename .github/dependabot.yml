@@ -1,0 +1,45 @@
+version: 2
+updates:
+  - package-ecosystem: "terraform"
+    directories:
+      - "**/*"
+    schedule:
+      # Check for updates to GitHub Actions every day
+      interval: "daily"
+      time: "10:00"
+      timezone: "Australia/Sydney"
+  - package-ecosystem: "gomod"
+    directories:
+      - "**/*"
+    schedule:
+      # Check for updates to GitHub Actions every day
+      interval: "daily"
+      time: "10:00"
+      timezone: "Australia/Sydney"
+  - package-ecosystem: "pip"
+    directories:
+      - "**/*"
+    schedule:
+      # Check for updates to GitHub Actions every day
+      interval: "daily"
+      time: "10:00"
+      timezone: "Australia/Sydney"
+  - package-ecosystem: "docker"
+    directories:
+      - "**/*"
+    schedule:
+      # Check for updates to GitHub Actions every day
+      interval: "daily"
+      time: "10:00"
+      timezone: "Australia/Sydney"
+  - package-ecosystem: "npm"
+    directories:
+      - "**/*"
+    schedule:
+      # Check for updates to GitHub Actions every day
+      interval: "daily"
+      time: "10:00"
+      timezone: "Australia/Sydney"
+
+
+
